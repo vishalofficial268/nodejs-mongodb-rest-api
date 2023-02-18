@@ -1,4 +1,3 @@
-const { ObjectID } = require('mongodb');
 const userModel = require('../model/userModel');
 
 
@@ -34,7 +33,8 @@ const getAllUsersDetails = async (req) => {
 
 const getUserById = async (req) => {
     try {
-        let userId = ObjectID(req.body.id);
+        let userId = req.params.id;
+        userId = userId.replace(':', "");
         if (userId) {
             let userDetails = await userModel.getUserById(userId);
             return userDetails;
@@ -51,10 +51,11 @@ const getUserById = async (req) => {
 
 const updateUser = async (req) => {
     try {
-        let body = req.body;
-        let { userId } = body;
-        if (userId && Object.keys(body).length > 1) {
-            let updateUser = await userModel.updateUserById(body);
+        let updateObj = req.body;
+        let userId = req.params.id;
+        userId = userId.replace(':', "");
+        if (userId && Object.keys(updateObj).length > 1) {
+            let updateUser = await userModel.updateUserById(userId, updateObj);
             return updateUser;
         } else {
             return {
@@ -68,8 +69,8 @@ const updateUser = async (req) => {
 }
 
 const deleteUser = async (req) => {
-    let body = req.body;
-    let { userId } = body;
+    let userId = req.params.id;
+    userId = userId.replace(':', "");
     if (userId) {
         let deleteUserDetails = await userModel.deleteUserById(userId);
         return deleteUserDetails;

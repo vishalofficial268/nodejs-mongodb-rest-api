@@ -3,7 +3,6 @@ const { connectToDb, getDb } = require('./config/db');
 const PORT = process.env.PORT || 5050;
 const morgan = require('morgan');
 const initRouterLoader = require('./routes/initRouterLoader');
-const error_handler = require('./errors/error-handler');
 const app = express();
 let db;
 

@@ -1,5 +1,5 @@
 let responseObj = {};
-let { ObjectID } = require("mongodb")
+let { ObjectId } = require("mongodb")
 
 /** check the user with the same email exists or not */
 
@@ -42,7 +42,7 @@ const createUser = async (req) => {
 /** To get all the users */
 const getAllUsers = async () => {
     try {
-        let allUsers = dbs.getCollection('users').find({}).toArray();
+        let allUsers = await dbs.collection('users').find({}).toArray();
         if (allUsers && allUsers.length > 0) {
             return responseObj = {
                 success: true,
@@ -62,22 +62,19 @@ const getAllUsers = async () => {
 }
 
 /** To get the user by its Id */
-const getUserById = async (req) => {
+const getUserById = async (userId) => {
     try {
-        let body = req.body;
-        let userId = ObjectID(body._id);
-        let userDetails = dbs.getCollection('users').findOne(userId).toArray();
-
-        if (userDetails && userDetails.length > 0) {
+        let userDetail = await dbs.collection('users').findOne({ _id: new ObjectId(userId) });
+        if (userDetail && Object.keys(userDetail).length > 0) {
             return responseObj = {
                 success: true,
-                message: 'Users records found.',
-                data: userDetails
+                message: 'User records found.',
+                data: userDetail
             }
         } else {
             return responseObj = {
                 success: false,
-                message: 'Users records not found.',
+                message: 'User records not found.',
                 data: null
             }
         }
@@ -87,22 +84,20 @@ const getUserById = async (req) => {
 }
 
 /** To update the user by its Id */
-const updateUserById = async (req) => {
+const updateUserById = async (userId, updateObj) => {
     try {
-        let body = req.body;
-        let userId = ObjectID(body._id);
-        let updatedUser = dbs.getCollection('users').updateOne(userId).toArray();
-
-        if (updatedUser && updatedUser.length > 0) {
+        console.log(userId, updateObj)
+        let updatedUser = await dbs.collection('users').updateOne({ _id: new ObjectId(userId) }, { $set: updateObj });
+        if (updatedUser && Object.keys(updatedUser).length > 0) {
             return responseObj = {
                 success: true,
-                message: 'Users records found.',
+                message: 'User records updated.',
                 data: updatedUser._id
             }
         } else {
             return responseObj = {
                 success: false,
-                message: 'Users records not found.',
+                message: 'User records not updated.',
                 data: null
             }
         }
@@ -112,22 +107,20 @@ const updateUserById = async (req) => {
 }
 
 /** To delete the user by its Id */
-const deleteUserById = async (req) => {
+const deleteUserById = async (userId) => {
     try {
-        let body = req.body;
-        let userId = ObjectID(body._id);
-        let deleted = dbs.getCollection('users').deleteOne(userId);
 
-        if (deleted && deleted.length > 0) {
+        let deletedUser = await dbs.collection('users').deleteOne({ _id: new ObjectId(userId) });
+        if (deletedUser && Object.keys(deletedUser).length > 0) {
             return responseObj = {
                 success: true,
-                message: 'Users records found.',
-                data: deleted
+                message: 'User records deleted.',
+                data: deletedUser
             }
         } else {
             return responseObj = {
                 success: false,
-                message: 'Users records not found.',
+                message: 'User records not deleted.',
                 data: null
             }
         }
