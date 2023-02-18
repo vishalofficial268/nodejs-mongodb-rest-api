@@ -9,31 +9,26 @@
 
 /** CODE FEATURES **/
 /**
-* user models in the models
-* dynamic error handling
+* user models in the models   -- done
 */
 
 /** USER FEATURES **/
 /**
-* * Create
-* Read
-* Update
-* Delete
+* Create -- done
+* Read  -- done
+* Update  -- done
+* Delete  -- done
 */
 
 
-/** TODO FEATURES **/
-/**
- * Create
- * Read
- * Update
- * Delete
- */
-
-/**  * user authentications
- * passport js integrations
- * socket
+/** 
+ * user-signup
+ * user-login
+ * user-cookies -session token
  * password hased
+ * user authentications
+ * passport js integrations
+ * socket emplimentation
  */
 
 
