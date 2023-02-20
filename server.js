@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const initRouterLoader = require('./routes/initRouterLoader');
 const app = express();
 const { config } = require('./config/constant');
-// console.log(config);
 let db;
 
 
@@ -12,7 +11,7 @@ let db;
 connectToDb((err) => {
     if (!err) {
         app.listen(config.PORT, () => {
-            console.log(`Server is running at http://localhost:${config.PORT}`);
+            console.log(`Server is running at ${config.HOST + config.PORT}`);
         });
         db = getDb();
         global.dbs = db;

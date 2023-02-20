@@ -1,5 +1,5 @@
 let responseObj = {};
-let { ObjectId } = require("mongodb")
+let { ObjectId } = require("mongodb");
 
 /** check the user with the same email exists or not */
 
