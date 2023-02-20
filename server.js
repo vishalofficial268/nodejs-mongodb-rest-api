@@ -1,17 +1,18 @@
 const express = require('express');
 const { connectToDb, getDb } = require('./config/db');
-const PORT = process.env.PORT || 5050;
 const morgan = require('morgan');
 const initRouterLoader = require('./routes/initRouterLoader');
 const app = express();
+const { config } = require('./config/constant');
+// console.log(config);
 let db;
 
 
 //db connection:
 connectToDb((err) => {
     if (!err) {
-        app.listen(PORT, () => {
-            console.log(`Server is running at http://localhost:${PORT}`);
+        app.listen(config.PORT, () => {
+            console.log(`Server is running at http://localhost:${config.PORT}`);
         });
         db = getDb();
         global.dbs = db;

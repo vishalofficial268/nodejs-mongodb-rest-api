@@ -1,12 +1,14 @@
+const { config } = require('./constant');
 const { MongoClient } = require('mongodb');
-const mongo_url = "mongodb://127.0.0.1/27017/";
+const MONGO_URI = config.MONGO_URI;
+const DB_NAME = config.DB_NAME;
 let dbConnection;
 
 module.exports = {
-    connectToDb: async (cb, db_name = "employees") => {
+    connectToDb: async (cb, DB_NAME) => {
         try {
-            let client = await MongoClient.connect(mongo_url, { useNewUrlParser: true, useUnifiedTopology: true });
-            dbConnection = client.db(db_name);
+            let client = await MongoClient.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+            dbConnection = client.db(DB_NAME);
             return cb();
         } catch (error) {
             console.log(error);
