@@ -1,9 +1,10 @@
 const express = require('express');
-const { connectToDb, getDb } = require('./config/db');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const { connectToDb, getDb } = require('./config/db');
+const { config } = require('./config/constant');
 const initRouterLoader = require('./routes/initRouterLoader');
 const app = express();
-const { config } = require('./config/constant');
 let db;
 
 
@@ -15,6 +16,7 @@ connectToDb((err) => {
         });
         db = getDb();
         global.dbs = db;
+        console.log("current database name ::: ", dbs.databaseName);
     } else {
         console.log('Oops ! something went wrong, while mongo connection stablishment.')
     }
@@ -25,8 +27,8 @@ connectToDb((err) => {
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '16mb', parameterLimit: 50000 }));
 app.use('/v1.0', initRouterLoader);
+app.use(cookieParser())
 app.use(morgan('dev'));
-// app.use(error_handler(req, res, next));
 
 
 //Home Page Routes:
