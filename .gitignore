@@ -1,7 +1,7 @@
-ssh-key
-ssh-key.pub
 .vscode
 .env
-node_modules
+ssh-key
+ssh-key.pub
 .serverless
 serverless.yml
+node_modules

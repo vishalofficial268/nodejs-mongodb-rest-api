@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const { config } = require('./config/constant');
 const cookieParser = require('cookie-parser');
 const initRouterLoader = require('./routes/initRouterLoader');
+const JSONDATA = require('/opt/nodejs/data.json');
+const { addTwoNumbers } = require('/opt/nodejs/common.js');
 const app = express();
 const PORT = config.PORT;
 const HOST = config.HOST;
@@ -23,6 +25,21 @@ app.get('/', async (req, res) => {
     res.send("Welcome to NodeJS-Mongodb REST APIs");
 });
 
+
+/**
+ * This is to check the utility file as from the layers:
+ */
+app.get('/dummy-data', async (req, res) => {
+    res.json(JSONDATA);
+});
+
+/**
+ * This is to check the utility file as from the layers:
+ */
+app.post('/add-two-numbers', async (req, res) => {
+    let result = await addTwoNumbers(req);
+    res.json(result);
+});
 /**
  * If the App is deployed over the Lambad function, No need to app.listen:
  * Only we need to export the whole application to serverless
