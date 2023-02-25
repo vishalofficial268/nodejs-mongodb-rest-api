@@ -33,6 +33,7 @@ const signUpUser = async (req, res) => {
                     message: "User record created successfully!",
                     data: createUserRecord.insertedId,
                     password: genPassword.password,
+                    cookies: getCookie
                 }
 
             } else {
@@ -69,6 +70,7 @@ const logInUser = async (req, res) => {
                 return {
                     success: true,
                     message: "User logged in successfully!",
+                    cookies: getCookie
                 }
             } else {
                 return {

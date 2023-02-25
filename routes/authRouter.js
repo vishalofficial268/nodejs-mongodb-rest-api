@@ -19,7 +19,7 @@ router.post('/reset-password', async (req, res) => {
 
 router.post('/logout', async (req, res) => {
     res.cookie("jwt", "", { maxAge: "1" })
-    res.redirect('/');
+    res.json({ success: true, message: "Logged out successfully!" });
 })
 
 

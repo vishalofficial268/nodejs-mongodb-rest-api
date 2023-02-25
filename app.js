@@ -28,8 +28,8 @@ app.get('/', async (req, res) => {
  * Only we need to export the whole application to serverless
  */
 
-app.listen(PORT, () => {
-    console.log(`app is running at ${HOST + ":" + PORT}`);
-})
+// app.listen(PORT, () => {
+//     console.log(`app is running at ${HOST + ":" + PORT}`);
+// })
 
-// module.exports.handler = serverless(app);
+module.exports.handler = serverless(app);

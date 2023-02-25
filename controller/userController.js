@@ -54,7 +54,7 @@ const updateUser = async (req) => {
         let updateObj = req.body;
         let userId = req.params.id;
         userId = userId.replace(':', "");
-        if (userId && Object.keys(updateObj).length > 1) {
+        if (userId && Object.keys(updateObj).length > 0) {
             let updateUser = await userModel.updateUserById(userId, updateObj);
             return updateUser;
         } else {
