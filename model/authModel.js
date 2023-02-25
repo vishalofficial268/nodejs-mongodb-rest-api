@@ -1,8 +1,12 @@
 let { ObjectId } = require("mongodb");
+let { getDbConnection } = require('../config/db');
+
+
 
 const checkExistingUser = async (email) => {
     try {
-        let existingUser = await dbs.collection('users').findOne({ email: email, isActive: true });
+        var db = await getDbConnection();
+        let existingUser = await db.collection('users').findOne({ email: email, isActive: true });
         if (existingUser && existingUser._id) {
             return {
                 success: true,
@@ -21,7 +25,8 @@ const checkExistingUser = async (email) => {
 
 const userSignUp = async (userObj) => {
     try {
-        let createdUser = await dbs.collection('users').insertOne(userObj);
+        var db = await getDbConnection();
+        let createdUser = await db.collection('users').insertOne(userObj);
         if (createdUser && createdUser.insertedId) {
             return {
                 success: true,
@@ -43,8 +48,9 @@ const userSignUp = async (userObj) => {
 
 const updatePassword = async (email, hashedPassword) => {
     try {
+        var db = await getDbConnection();
         if (hashedPassword) {
-            let updatePassword = await dbs.collection('users').updateOne(
+            let updatePassword = await db.collection('users').updateOne(
                 { email: email },
                 {
                     $set: {

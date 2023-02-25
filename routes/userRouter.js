@@ -3,7 +3,6 @@ const userController = require('../controller/userController');
 
 
 router.post('/create-user', async (req, res) => {
-
     let result = await userController.createUserDetails(req);
     res.status(200).json(result);
 });

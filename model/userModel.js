@@ -1,12 +1,13 @@
 let responseObj = {};
 let { ObjectId } = require("mongodb");
-
+let { getDbConnection } = require('../config/db');
 /** check the user with the same email exists or not */
 
 const existingUserByEmail = async (email) => {
+    var db = await getDbConnection();
     if (email) {
         email = email.trim().toLowerCase();
-        let existingUser = await dbs.collection('users').findOne({ email });
+        let existingUser = await db.collection('users').findOne({ email });
         if (existingUser && Object.keys(existingUser).length > 0) {
             return true;
         } else {
@@ -18,8 +19,9 @@ const existingUserByEmail = async (email) => {
 /** To create the new user */
 const createUser = async (req) => {
     try {
+        var db = await getDbConnection();
         let userObj = req;
-        let createdUser = await dbs.collection('users').insertOne(userObj);
+        let createdUser = await db.collection('users').insertOne(userObj);
         if (createdUser && createdUser.insertedId) {
             console.log('Users created successfully.')
             return responseObj = {
@@ -42,7 +44,8 @@ const createUser = async (req) => {
 /** To get all the users */
 const getAllUsers = async () => {
     try {
-        let allUsers = await dbs.collection('users').find({}).toArray();
+        var db = await getDbConnection();
+        let allUsers = await db.collection('users').find({}).toArray();
         if (allUsers && allUsers.length > 0) {
             return responseObj = {
                 success: true,
@@ -64,7 +67,8 @@ const getAllUsers = async () => {
 /** To get the user by its Id */
 const getUserById = async (userId) => {
     try {
-        let userDetail = await dbs.collection('users').findOne({ _id: new ObjectId(userId) });
+        var db = await getDbConnection();
+        let userDetail = await db.collection('users').findOne({ _id: new ObjectId(userId) });
         if (userDetail && Object.keys(userDetail).length > 0) {
             return responseObj = {
                 success: true,
@@ -86,8 +90,8 @@ const getUserById = async (userId) => {
 /** To update the user by its Id */
 const updateUserById = async (userId, updateObj) => {
     try {
-        console.log(userId, updateObj)
-        let updatedUser = await dbs.collection('users').updateOne({ _id: new ObjectId(userId) }, { $set: updateObj });
+        var db = await getDbConnection();
+        let updatedUser = await db.collection('users').updateOne({ _id: new ObjectId(userId) }, { $set: updateObj });
         if (updatedUser && Object.keys(updatedUser).length > 0) {
             return responseObj = {
                 success: true,
@@ -109,8 +113,8 @@ const updateUserById = async (userId, updateObj) => {
 /** To delete the user by its Id */
 const deleteUserById = async (userId) => {
     try {
-
-        let deletedUser = await dbs.collection('users').deleteOne({ _id: new ObjectId(userId) });
+        var db = await getDbConnection();
+        let deletedUser = await db.collection('users').deleteOne({ _id: new ObjectId(userId) });
         if (deletedUser && Object.keys(deletedUser).length > 0) {
             return responseObj = {
                 success: true,

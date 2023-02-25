@@ -1,4 +1,7 @@
 let { ObjectId } = require("mongodb");
+let { getDbConnection } = require('../config/db');
+
+
 
 /**
  * 
@@ -8,10 +11,10 @@ let { ObjectId } = require("mongodb");
  * Can be add sort, limit
  */
 const findByQuery = async (reqObj) => {
-    console.log(reqObj);
     const { query, projection, sort, limit } = reqObj;
     if (reqObj && Object.keys(reqObj).length > 0) {
-        const result = await dbs.collection(collectionName)
+        var db = await getDbConnection();
+        const result = await db.collection(collectionName)
             .find(query, projection)
             .sort(sort)
             .limit(limit)

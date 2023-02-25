@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 
@@ -83,9 +83,11 @@ const generateCookies = async (userId, userEmail) => {
 
 
 
+
+
 module.exports = {
     generateUniquePassword,
     verifyUserPassword,
     getHashedPassword,
-    generateCookies
+    generateCookies,
 }
