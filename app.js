@@ -22,7 +22,7 @@ app.use(morgan('dev'));
 
 //Home Page Routes:
 app.get('/', async (req, res) => {
-    res.send("Welcome to NodeJS-Mongodb REST APIs");
+    res.send("Welcome to NodeJS-Mongodb REST APIs with Lambda Function.");
 });
 
 
